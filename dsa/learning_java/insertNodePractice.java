@@ -411,43 +411,92 @@ public class insertNodePractice {
           if (head == last.next) break;
       }
       System.out.println();
-  }
-
-  // #28. Function to insert a node at the beginning of the circular Linked List
-  static Node insertAtBeginning(Node last, int data) {
-    Node newNode = new Node(data);
-
-    // If the list is empty, make the new point to
-    // itself and set it as last
-    if (last == null) {
-      newNode.next = newNode;
-      return newNode;
     }
 
-    // insert the newNode at the beginning
-    newNode.next = last.next;
-    last.next = newNode;
+    // #28. Function to insert a node at the beginning of the circular Linked List
+    static Node insertAtBeginning(Node last, int data) {
+      Node newNode = new Node(data);
 
-    return last;
-  }
+      // If the list is empty, make the new point to
+      // itself and set it as last
+      if (last == null) {
+        newNode.next = newNode;
+        return newNode;
+      }
 
-  // #29. Function to insert a node at the end of a Circular Linked list
-  static Node insertAtEnd(Node tail, int data) {
-    Node newNode = new Node(data);
+      // insert the newNode at the beginning
+      newNode.next = last.next;
+      last.next = newNode;
 
-    if (tail == null) {
-      tail = newNode;
-      newNode.next = newNode;
+      return last;
     }
-    else {
-      // Insert new node after the current tail and
-      // update the tail pointer
-      newNode.next = tail.next;
-      tail.next = newNode;
-      tail = newNode;
+
+    // #29. Function to insert a node at the end of a Circular Linked list
+    static Node insertAtEnd(Node tail, int data) {
+      Node newNode = new Node(data);
+
+      if (tail == null) {
+        tail = newNode;
+        newNode.next = newNode;
+      }
+      else {
+        // Insert new node after the current tail and
+        // update the tail pointer
+        newNode.next = tail.next;
+        tail.next = newNode;
+        tail = newNode;
+      }
+      return tail;
     }
-    return tail;
-  }
+
+    // #30. Function to insert a node at a specific position in a circular linked list
+    static Node insertAtPosition(Node last, int data, int pos) {
+      if (last == null) {
+        // If the list is empty
+        if (pos != 1) {
+          System.out.println("Invalid position!");
+          return last;
+        }
+        // Create a new node and make it point to itself
+        Node newNode = new Node(data);
+        last = newNode;
+        last.next = last;
+        return last;
+      }
+      // Create a new node with the given data
+      Node newNode = new Node(data);
+
+      // curr will point to head initially
+      Node curr = last.next;
+
+      if (pos == 1) {
+        // Insert at the beginning
+        newNode.next = curr;
+        last.next = newNode;
+        return last;
+      }
+
+      // Traverse the list to find the insertion point
+      for(int i = 1; i < pos - 1; ++i) {
+        curr = curr.next;
+
+        // If position is out of bounds
+        if (curr == last.next) {
+          System.out.println("Invalid position!");
+          return last;
+        }
+      }
+
+      // Insert the new node at this position
+      newNode.next = curr.next;
+      curr.next = newNode;
+
+      // Uodate last if the new node is inserted at the end
+      if(curr == last) 
+        last = newNode;
+
+      return last;
+    }
 
     // Main
     public static void main(String[] args) {
@@ -553,5 +602,8 @@ public class insertNodePractice {
       last = insertAtEnd(last, 47);
       last = insertAtEnd(last, 48);
       printCircularList(last);
+      // insert 46 at 3rd position
+      int data = 46, pos = 3;
+      printCircularList(insertAtPosition(last, data, pos));
     }
 }
