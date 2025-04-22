@@ -270,7 +270,7 @@ public class insertNodePractice {
     // #18. Find nth node from end in a Linked List
     static int getNthFromLast(Node head, int N) {
       Node curr = head;
-      int count = Node.getLength(head);
+      int count = getLength(head);
 
       if (count < N)
         return -1;
@@ -300,7 +300,7 @@ public class insertNodePractice {
     
     // #20. Method to get mmiddle of a Linked List using count method
     static int getMiddle(Node head) {
-      int length = Node.getLength(head);
+      int length = getLength(head);
       int mid_index = length / 2;
       Node curr = head;
 
@@ -518,6 +518,87 @@ public class insertNodePractice {
       return last;
     }
 
+    // #32. Delete a specific node in circular linked list
+    static Node deleteSpecificNode(Node last, int key) {
+      // If the list is empty
+      if(last == null) {
+        System.out.println("List is empty, nothing to delete.");
+        return last;
+      }
+      Node curr = last.next, prev = last;
+      
+      // If the node to be deleted is the only node in the list.
+      if(curr == last && curr.data == key) {
+        last = null;
+        return last;
+      }
+
+      // If the node to be deleted is first node
+      if (curr.data == key) {
+        last.next = curr.next;
+        return last;
+      }
+
+      // Traverse the list to find the node to be deleted
+      while(curr != last && curr.data != key) {
+        prev = curr;
+        curr = curr.next;
+      }
+
+      // If the node to be deleted is found
+      if (curr.data == key) {
+        prev.next = curr.next;
+        if (curr == last) {
+          last = prev;
+        }
+      }
+      else {
+        // If the node to be deleted is not found
+        System.out.println("Node with data " + key + " not found");
+      }
+      return last;
+    }
+
+    // #33. count linked list nodes
+    static int getLength(Node head) {
+      int count = 0;
+      Node curr = head;
+      while(curr != null) {
+          curr = curr.next;
+          count++;
+      }
+      return count;
+    }
+
+    // #34. Deletion at the end of circular linked list
+    static Node deleteLastNodeFromCircularList(Node last) {
+      // If the list is empty
+      if (last == null) {
+        System.out.println("List is empty, nothing to delete.");
+        return last;
+      }
+      Node head = last.next;
+
+      // if there is only one node in the list
+      if (head == last) {
+        last = null;
+        return last;
+      }
+      
+      Node curr = head;
+
+      // Traverse the list to find the second last node
+      while (curr.next != last) {
+        curr = curr.next;
+      }
+
+      // Update the second last node's next pointer to point to head
+      curr.next = head;
+      last = curr;
+
+      return last;
+    }
+
     // Main
     public static void main(String[] args) {
       Node head = new Node(2);
@@ -556,7 +637,7 @@ public class insertNodePractice {
       else
         System.out.println("Key " + key + " is not present");
 
-      System.out.println("Count nodes in Linked List " + Node.getLength(head));
+      System.out.println("Count nodes in Linked List " + getLength(head));
       System.out.println("Count nodes in Linked List " + countNodesRecursive(head));
       Node head1 = reversedLinkedList(head);
       printList(head1);
@@ -626,5 +707,8 @@ public class insertNodePractice {
       int data = 46, pos = 3;
       printCircularList(insertAtPosition(last, data, pos));
       printCircularList(deleteFromBeginning(last));
+      key = 46;
+      printCircularList(deleteSpecificNode(last, key));
+      printCircularList(deleteLastNodeFromCircularList(last));
     }
 }
