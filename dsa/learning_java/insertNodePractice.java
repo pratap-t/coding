@@ -498,6 +498,26 @@ public class insertNodePractice {
       return last;
     }
 
+    // #31. Deletion from the beginning of the circular liked list
+    static Node deleteFromBeginning(Node last) {
+      if (last == null) {
+        System.out.println("List is empty!");
+        return last;
+      }
+      
+      Node curr = last.next;
+
+      if (curr == last) {
+        // If there is only one node in the list.
+        last = null;
+      } else {
+          // More than one node in the list.
+          last.next = curr.next;
+      }
+
+      return last;
+    }
+
     // Main
     public static void main(String[] args) {
       Node head = new Node(2);
@@ -605,5 +625,6 @@ public class insertNodePractice {
       // insert 46 at 3rd position
       int data = 46, pos = 3;
       printCircularList(insertAtPosition(last, data, pos));
+      printCircularList(deleteFromBeginning(last));
     }
 }
