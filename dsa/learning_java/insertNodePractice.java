@@ -122,7 +122,7 @@ public class insertNodePractice {
     public static void printList(Node head) {
       Node current = head;
       while (current != null) {
-        System.out.println(" " + current.data);
+        System.out.print(current.data + " ");
         current = current.next;
       }
       System.out.println();
@@ -599,6 +599,74 @@ public class insertNodePractice {
       return last;
     }
 
+    // #35 Function to delete last occurance of a ley in the linked list
+    static Node deleteLastOccurance(Node head, int key) {
+      Node curr = head, last = null, prev = null, lastPrev = null;
+
+      while(curr !=null) {
+        if(curr.data == key) {
+          lastPrev = prev;
+          last = curr;
+        }
+        prev = curr;
+        curr = curr.next;
+      }
+
+      // If the key was found
+      if (last != null) {
+
+        // If last occurance is not head
+        if (lastPrev != null) {
+          lastPrev.next = last.next;
+        } else {
+
+          // If last occurance is head, move head to next node
+          head = head.next;
+        }
+      }
+      return head;
+    }
+
+    // #36 Function to delete middle node from linked list
+    static Node deleteMiddleNode(Node head) {
+      // If list is empty return null
+      if(head == null) return null;
+      
+      // Edge case: return null if there is only one node
+      if (head.next == null) return null;
+
+      int count = getLength(head);
+      int middle_index = count / 2;
+      
+      Node curr = head;
+      while (middle_index > 1) {
+        curr = curr.next;
+        --middle_index;
+      }
+      curr.next = curr.next.next;
+      return head;
+    } 
+    
+    // #37. Function to delete middle node using hare & tortoise
+    static Node deleteMiddleUsingHairTortoise(Node head) {
+
+      // If list is empty return null
+      if (head == null) return null;
+
+      // Edge case: return null if there is only one node
+      if (head.next == null) return null;
+      
+      Node fast_ptr = head, slow_ptr = head, prev = null;
+
+      while (fast_ptr != null && fast_ptr.next != null) {
+        fast_ptr = fast_ptr.next.next;
+        prev = slow_ptr;
+        slow_ptr = slow_ptr.next;
+      }
+      prev.next = slow_ptr.next;
+      return head;
+    }
+
     // Main
     public static void main(String[] args) {
       Node head = new Node(2);
@@ -710,5 +778,19 @@ public class insertNodePractice {
       key = 46;
       printCircularList(deleteSpecificNode(last, key));
       printCircularList(deleteLastNodeFromCircularList(last));
+      insertAtEndNode(head, 2);
+      insertAtEndNode(head, 6);
+      insertAtEndNode(head, 8);
+      insertAtEndNode(head, 10);
+      insertAtEndNode(head, 11);
+      insertAtEndNode(head, 12);
+      insertAtEndNode(head, 13);
+      insertAtEndNode(head, 14);
+      insertAtEndNode(head, 15);
+
+      printList(head);
+      printList(deleteLastOccurance(head, 2));
+      // printList(deleteMiddleNode(head));
+      printList(deleteMiddleUsingHairTortoise(head));
     }
 }
