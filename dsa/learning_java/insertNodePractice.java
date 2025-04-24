@@ -667,6 +667,26 @@ public class insertNodePractice {
       return head;
     }
 
+    // #38. Function to remove duplicates from sorted list
+    static Node removeDuplicates(Node head) {
+      // return null if list is empty
+      if (head == null) return null;
+
+      // Edge case: return null if there is only one node
+      if(head.next == null) return null;
+
+      Node curr = head;
+
+      while (curr != null && curr.next != null) {
+        if ( curr.data == curr.next.data) {
+          // skip duplicate nodes
+          curr.next = curr.next.next;
+        } else {
+          curr = curr.next;
+        }
+      } return head;
+    }
+
     // Main
     public static void main(String[] args) {
       Node head = new Node(2);
@@ -781,6 +801,8 @@ public class insertNodePractice {
       insertAtEndNode(head, 2);
       insertAtEndNode(head, 6);
       insertAtEndNode(head, 8);
+      insertAtEndNode(head, 8);
+      insertAtEndNode(head, 8);
       insertAtEndNode(head, 10);
       insertAtEndNode(head, 11);
       insertAtEndNode(head, 12);
@@ -792,5 +814,6 @@ public class insertNodePractice {
       printList(deleteLastOccurance(head, 2));
       // printList(deleteMiddleNode(head));
       printList(deleteMiddleUsingHairTortoise(head));
+      printList(removeDuplicates(head));
     }
 }
