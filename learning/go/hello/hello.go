@@ -7,10 +7,19 @@ import (
 )
 
 func main() {
-    // Get a greeting message and print it.
-    message, error := greetings.Hello("Gladys")
-	if error != nil {
-		log.Fatal(error)
+	// Set properties of the predefined Loger, including
+	// the log entry prefix and a flag to disable printing
+	// the time, source file, and line number.
+	log.SetPrefix("greetings: ")
+	log.SetFlags(0)
+
+	// A slice of names.
+	names := []string{"Gladys", "Samantha", "Darrin"}
+
+	// Request greeting messages for the names.
+	messages, err := greetings.Hellos(names)
+    if err != nil {
+		log.Fatal(err)
 	}
-    fmt.Println(message)
+    fmt.Println(messages)
 }
