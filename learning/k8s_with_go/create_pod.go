@@ -28,51 +28,6 @@ import (
 	jsonk "k8s.io/apimachinery/pkg/runtime/serializer/json"
 )
 
-func createPod() error {
-	pod := createPodObject()
-	serializer := getJSONSerializer()
-	postBody, err := serializePodObject(serializer, pod)
-	if err != nil {
-		return err
-	}
-	reqCreate, err := buildPostRequest(postBody)
-	if err != nil {
-		return err
-	}
-	client := &http.Client{}
-	resp, err := client.Do(reqCreate)
-	if err != nil {
-		return err
-	}
-	defer resp.Body.Close()
-	body, err := io.ReadAll(resp.Body)
-	if err != nil {
-		return err
-	}
-	if resp.StatusCode < 300 {
-		createdPod, err := deserializePodBody(serializer, body)
-		if err != nil {
-			return err
-		}
-		json, err := json.MarshalIndent(createdPod, "", " ")
-		if err != nil {
-			return err
-		}
-		fmt.Printf("%s\n", json)
-	} else {
-		status, err := deserializeStatusBody(serializer, body)
-		if err != nil {
-			return err
-		}
-		json, err := json.MarshalIndent(status, "", " ")
-		if err != nil {
-			return err
-		}
-		fmt.Printf("%s\n", json)
-	}
-	return nil
-}
-
 func createPodObject() *corev1.Pod {
 	pod := corev1.Pod{
 		Spec: corev1.PodSpec{
@@ -178,4 +133,56 @@ func getJSONSerializer() runtime.Serializer {
 		scheme,
 		jsonk.SerializerOptions{},
 	)
+}
+
+func createPod() error {
+	pod := createPodObject()
+	serializer := getJSONSerializer()
+	postBody, err := serializePodObject(serializer, pod)
+	if err != nil {
+		return err
+	}
+	reqCreate, err := buildPostRequest(postBody)
+	if err != nil {
+		return err
+	}
+	client := &http.Client{}
+	resp, err := client.Do(reqCreate)
+	if err != nil {
+		return err
+	}
+	defer resp.Body.Close()
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return err
+	}
+	if resp.StatusCode < 300 {
+		createdPod, err := deserializePodBody(serializer, body)
+		if err != nil {
+			return err
+		}
+		json, err := json.MarshalIndent(createdPod, "", " ")
+		if err != nil {
+			return err
+		}
+		fmt.Printf("%s\n", json)
+	} else {
+		status, err := deserializeStatusBody(serializer, body)
+		if err != nil {
+			return err
+		}
+		json, err := json.MarshalIndent(status, "", " ")
+		if err != nil {
+			return err
+		}
+		fmt.Printf("%s\n", json)
+	}
+	return nil
+}
+
+func main() {
+	err := createPod()
+	if err != nil {
+		fmt.Printf("Error creating pod: %v\n", err)
+	}
 }
