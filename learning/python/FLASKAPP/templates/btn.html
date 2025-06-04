@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script type="text/javascript" src="{{ url_for('static', filename='myscript.js') }}"></script>
+    </head>
+    <body>
+        <h1>Hi {{name}}!</h1>
+        <div style="font-size:20px;">Were you born before 2001?</div>
+        <input type="hidden" id="nmid" name="name" value={{name}}>
+        <input type="image" name="button1" onclick="myfunction(this.id)" id="button1" src="{{ url_for('static', filename='checkmark.png') }}" />
+        <input type="image" name="button2" onclick="myfunction(this.id)" id="button2" src="{{ url_for('static', filename='cancel.png') }}" />
+    </body>
+</html>
