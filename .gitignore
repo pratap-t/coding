@@ -2,3 +2,15 @@
 *.class
 ./dsa/learning_java/*.class
 *.log
+./coding/learning/python/FLASKAPP/development.env
+./coding/learning/python/FLASKAPP/production.env
+./__pycache__/
+# Ignore all Python bytecode files
+*.pyc
+# Ignore all Jupyter Notebook checkpoints
+.ipynb_checkpoints
+# Ignore all virtual environment directories
+venv/
+.env
+# Ignore all IDE specific files
+.idea/

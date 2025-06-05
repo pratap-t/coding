@@ -1,43 +1,15 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>My Website</title>
-        <script src="{{ url_for('static', filename='hello.js') }}"></script>
-        <link rel="stylesheet" type="text/css" href="mystyle.css">
-    </head>
-    <body onload="myFunction()">
-        <div id = "time" style="text-align:right; width: 100%;"></div>
-        <h1 style="color:blue">
-            <div id="ttl">{{title}}</div>
-        </h1>
-        <ul>
-            <li><a href="#home">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
-        <table>
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Marks</th>
-                    <th>Result</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for row in marks %}
-                <tr>
-                    <td>{{row['Name']}}</td>
-                    <td>{{row['Marks']}}</td>
-                    <td>
-                        {% if row['Marks'] >= 50 %}
-                        <div>Pass</div>
-                        {% else %}
-                            <div style="text-decoration-line:underline;">Fail</div>
-                        {% endif %}
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </body>
-</html>
+    <body style="background-image: url({{bgfile}}); 
+    background-repeat: no-repeat;
+    background-attachment: fixed; 
+    background-size:cover;">
+    <h1>Flask session example</h1>
+    <p>
+        current background is: {{bgfile|replace('/static/','')}}
+        <a href="/changebg">
+            <h3>Click here to change</h3>
+        </a>
+    </p>
+        </body>
+        </html>
