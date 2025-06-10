@@ -1,4 +1,4 @@
-from flask import FLask, request, render_template
+from flask import Flask, request, render_template
 import sqlite3
 from encryption import encpwd
 
